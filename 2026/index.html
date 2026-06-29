@@ -5,137 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evaluación Auténtica 2026 · Un caso real en IIT414W (Taller de IA)</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&display=swap');
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body{
+            font-family:'Open Sans',sans-serif; line-height:1.5; color:#1d2733;
+            background:linear-gradient(135deg,#0F2A4A 0%,#14365C 45%,#1F4E79 100%); min-height:100vh;
+        }
+        .container{ max-width:1100px; margin:0 auto; padding:18px; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .switcher{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:16px; }
+        .switcher a{ text-decoration:none; font-family:'Montserrat',sans-serif; font-weight:600; font-size:.85rem;
+            padding:8px 18px; border-radius:30px; border:1.5px solid rgba(255,255,255,.5); color:#fff; transition:.25s; }
+        .switcher a.active{ background:#FF8C42; border-color:#FF8C42; }
+        .switcher a:not(.active):hover{ background:rgba(255,255,255,.15); }
 
-        body {
-            font-family: 'Open Sans', sans-serif;
-            line-height: 1.6;
-            background: linear-gradient(135deg, #0F2A4A 0%, #14365C 40%, #1F4E79 100%);
-            color: #1d2733;
-            min-height: 100vh;
-        }
+        .header{ text-align:center; color:#fff; padding:30px 22px; border-radius:22px; margin-bottom:22px;
+            background:linear-gradient(135deg,#2E5BBA,#4A90E2); box-shadow:0 14px 40px rgba(0,0,0,.35); }
+        .badge{ display:inline-block; background:#FF8C42; color:#fff; font-family:'Montserrat',sans-serif; font-weight:700;
+            letter-spacing:.5px; font-size:.72rem; padding:6px 16px; border-radius:30px; margin-bottom:12px; text-transform:uppercase; }
+        .header h1{ font-family:'Montserrat',sans-serif; font-size:2.4rem; font-weight:800; margin-bottom:8px; text-shadow:2px 2px 4px rgba(0,0,0,.3); }
+        .header .subtitle{ font-size:1.05rem; opacity:.95; font-style:italic; margin-bottom:14px; }
+        .author-info{ background:rgba(255,255,255,.16); padding:12px; border-radius:12px; font-size:.92rem; display:inline-block; }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        /* ---- ficha del caso ---- */
+        .ficha{ background:linear-gradient(135deg,#14365C,#1F4E79); color:#fff; border:2px solid #FF8C42;
+            border-radius:18px; padding:24px; margin-bottom:22px; box-shadow:0 10px 30px rgba(0,0,0,.3); }
+        .ficha .tag{ font-family:'Montserrat',sans-serif; font-weight:700; color:#FFB27A; text-transform:uppercase;
+            letter-spacing:1px; font-size:.78rem; margin-bottom:14px; }
+        .ficha-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-bottom:16px; }
+        .fitem{ background:rgba(255,255,255,.1); border-radius:12px; padding:13px 15px; display:flex; gap:12px; align-items:flex-start; }
+        .fitem .em{ font-size:1.6rem; line-height:1; }
+        .fitem b{ display:block; color:#FFB27A; font-size:.72rem; text-transform:uppercase; letter-spacing:.5px; margin-bottom:3px; }
+        .fitem span{ font-size:.9rem; }
+        .quote{ background:rgba(255,255,255,.12); border-left:4px solid #FF8C42; padding:14px 16px; border-radius:10px; font-style:italic; font-size:.95rem; }
 
-        /* ---- version switcher ---- */
-        .switcher {
-            display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
-            margin-bottom: 18px;
-        }
-        .switcher a {
-            text-decoration: none; font-family: 'Montserrat', sans-serif; font-weight: 600;
-            font-size: .9rem; padding: 8px 18px; border-radius: 30px;
-            border: 1.5px solid rgba(255,255,255,.5); color: #fff; transition: all .25s ease;
-        }
-        .switcher a.active { background: #FF8C42; border-color: #FF8C42; }
-        .switcher a:not(.active):hover { background: rgba(255,255,255,.15); }
+        /* ---- sections ---- */
+        .section{ background:#fff; border-radius:16px; padding:24px; margin-bottom:20px; box-shadow:0 6px 24px rgba(0,0,0,.18); border-top:6px solid #FF8C42; }
+        .stitle{ font-family:'Montserrat',sans-serif; font-size:1.35rem; font-weight:700; color:#2E5BBA; margin-bottom:18px; display:flex; align-items:center; gap:12px; }
+        .stitle .num{ background:#2E5BBA; color:#fff; width:38px; height:38px; border-radius:11px; display:inline-flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
 
-        .header {
-            text-align: center; color: white; padding: 36px 26px;
-            background: linear-gradient(135deg, #2E5BBA, #4A90E2);
-            border-radius: 22px; margin-bottom: 26px;
-            box-shadow: 0 14px 40px rgba(0,0,0,.35);
-        }
-        .badge {
-            display: inline-block; background: #FF8C42; color: #fff;
-            font-family: 'Montserrat', sans-serif; font-weight: 700; letter-spacing: .5px;
-            font-size: .8rem; padding: 6px 16px; border-radius: 30px; margin-bottom: 14px;
-            text-transform: uppercase;
-        }
-        .header h1 {
-            font-family: 'Montserrat', sans-serif; font-size: 2.5rem; font-weight: 800;
-            margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,.3); line-height: 1.15;
-        }
-        .header .subtitle { font-size: 1.15rem; opacity: .95; font-style: italic; margin-bottom: 16px; }
-        .author-info {
-            background: rgba(255,255,255,.16); padding: 14px; border-radius: 12px;
-            font-size: .98rem; margin-top: 10px; display: inline-block;
-        }
+        /* icon tiles (características) */
+        .tiles{ display:grid; grid-template-columns:repeat(auto-fit,minmax(165px,1fr)); gap:14px; }
+        .tile{ text-align:center; background:#F4F8FD; border:1.5px solid #D7E6F7; border-radius:14px; padding:18px 14px; transition:transform .25s, box-shadow .25s; }
+        .tile:hover{ transform:translateY(-4px); box-shadow:0 10px 22px rgba(46,91,186,.18); }
+        .tile .em{ font-size:2.4rem; display:block; margin-bottom:8px; }
+        .tile h3{ font-family:'Montserrat',sans-serif; font-size:.98rem; color:#2E5BBA; margin-bottom:6px; }
+        .tile .mini{ display:inline-block; margin-top:8px; font-size:.74rem; color:#8a3f0a; background:#FFF1E6; border-radius:20px; padding:4px 10px; }
 
-        /* ---- the spine: the real teaching case ---- */
-        .case-hero {
-            background: linear-gradient(135deg, #14365C, #1F4E79);
-            color: #fff; border-radius: 18px; padding: 28px; margin-bottom: 26px;
-            border: 2px solid #FF8C42; box-shadow: 0 10px 30px rgba(0,0,0,.3);
-        }
-        .case-hero .tag {
-            font-family: 'Montserrat', sans-serif; font-weight: 700; color: #FFB27A;
-            text-transform: uppercase; letter-spacing: 1px; font-size: .82rem; margin-bottom: 8px;
-        }
-        .case-hero h2 { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; margin-bottom: 14px; }
-        .case-hero .quote {
-            background: rgba(255,255,255,.1); border-left: 4px solid #FF8C42;
-            padding: 16px 18px; border-radius: 10px; font-style: italic; margin: 14px 0;
-        }
-        .case-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 12px; margin-top: 16px; }
-        .case-meta div { background: rgba(255,255,255,.1); padding: 12px 14px; border-radius: 10px; font-size: .9rem; }
-        .case-meta strong { color: #FFB27A; display: block; font-size: .78rem; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 3px; }
+        /* steps grid (9 pasos) */
+        .pasos{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+        .paso{ background:#F4F8FD; border-radius:12px; padding:14px; border-left:4px solid #2E5BBA; }
+        .paso .n{ background:#2E5BBA; color:#fff; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.9rem; margin-bottom:8px; }
+        .paso h4{ font-family:'Montserrat',sans-serif; font-size:.86rem; color:#2E5BBA; margin-bottom:4px; }
+        .paso .ex{ font-size:.78rem; color:#b25a16; }
 
-        .section {
-            background: #ffffff; border-radius: 16px; padding: 26px; margin-bottom: 24px;
-            box-shadow: 0 6px 24px rgba(0,0,0,.18); border-left: 6px solid #FF8C42;
-        }
-        .section-title {
-            font-family: 'Montserrat', sans-serif; font-size: 1.55rem; font-weight: 700;
-            color: #2E5BBA; margin-bottom: 18px; display: flex; align-items: center; gap: 12px;
-        }
-        .section-title .num {
-            background: #2E5BBA; color: #fff; width: 40px; height: 40px; border-radius: 12px;
-            display: inline-flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
-        }
-        .lead { color: #44515f; margin-bottom: 18px; }
+        /* kolb flow */
+        .flow{ display:flex; align-items:stretch; gap:8px; flex-wrap:wrap; justify-content:center; }
+        .phase{ flex:1 1 180px; background:linear-gradient(135deg,#2E5BBA,#4A90E2); color:#fff; border-radius:14px; padding:16px; text-align:center; }
+        .phase .em{ font-size:1.9rem; display:block; margin-bottom:6px; }
+        .phase h4{ font-family:'Montserrat',sans-serif; font-size:.92rem; margin-bottom:5px; }
+        .phase p{ font-size:.8rem; opacity:.95; }
+        .arrow{ display:flex; align-items:center; color:#FF8C42; font-size:1.6rem; font-weight:700; }
+        .loop{ text-align:center; margin-top:12px; color:#2E5BBA; font-family:'Montserrat',sans-serif; font-weight:600; font-size:.9rem; }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 16px; }
-        .card {
-            background: #F4F8FD; border-radius: 12px; padding: 18px; border: 1.5px solid #D7E6F7;
-            transition: transform .25s ease, box-shadow .25s ease;
-        }
-        .card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(46,91,186,.18); }
-        .card h3 { font-family: 'Montserrat', sans-serif; font-size: 1rem; color: #2E5BBA; margin-bottom: 6px; }
-        .card p { font-size: .92rem; color: #44515f; }
-        .card .applied {
-            margin-top: 10px; font-size: .85rem; color: #b25a16; background: #FFF1E6;
-            border-radius: 8px; padding: 8px 10px; border-left: 3px solid #FF8C42;
-        }
-        .card .applied b { color: #8a3f0a; }
+        /* bridge mundo laboral */
+        .bridge{ display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:center; }
+        .bnode{ background:#F4F8FD; border:1.5px solid #D7E6F7; border-radius:14px; padding:18px; text-align:center; }
+        .bnode .em{ font-size:2rem; display:block; margin-bottom:6px; }
+        .bnode h4{ font-family:'Montserrat',sans-serif; color:#2E5BBA; font-size:1rem; margin-bottom:6px; }
+        .bnode p{ font-size:.84rem; color:#44515f; }
+        .bridge .barrow{ color:#FF8C42; font-size:2rem; font-weight:700; }
 
-        /* steps */
-        .steps { display: grid; gap: 12px; }
-        .step {
-            display: grid; grid-template-columns: 46px 1fr; gap: 14px; align-items: start;
-            background: #F4F8FD; border-radius: 12px; padding: 14px 16px; border-left: 4px solid #2E5BBA;
-        }
-        .step .n {
-            background: #2E5BBA; color: #fff; width: 36px; height: 36px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-weight: 700;
-        }
-        .step h4 { color: #2E5BBA; font-family: 'Montserrat', sans-serif; font-size: .98rem; margin-bottom: 3px; }
-        .step p { font-size: .9rem; color: #44515f; }
-        .step .ex { display: block; margin-top: 5px; font-size: .85rem; color: #b25a16; }
+        /* instrument chips */
+        .chips{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; }
+        .chip{ display:flex; gap:12px; align-items:center; background:#F4F8FD; border:1.5px solid #D7E6F7; border-radius:12px; padding:13px 15px; }
+        .chip .em{ font-size:1.7rem; }
+        .chip b{ font-family:'Montserrat',sans-serif; color:#2E5BBA; font-size:.9rem; display:block; }
+        .chip span{ font-size:.78rem; color:#44515f; }
 
-        .kolb { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: 14px; }
-        .kolb .phase { background: linear-gradient(135deg,#2E5BBA,#4A90E2); color: #fff; border-radius: 12px; padding: 16px; }
-        .kolb .phase h4 { font-family: 'Montserrat', sans-serif; margin-bottom: 6px; font-size: 1rem; }
-        .kolb .phase p { font-size: .88rem; opacity: .95; }
+        /* timeline a-f */
+        .timeline{ display:grid; gap:10px; }
+        .tl{ display:grid; grid-template-columns:40px 1fr auto; gap:12px; align-items:center; background:#F4F8FD; border-radius:12px; padding:12px 14px; border-left:4px solid #FF8C42; }
+        .tl .l{ background:#FF8C42; color:#fff; width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-weight:700; font-family:'Montserrat',sans-serif; }
+        .tl h4{ font-family:'Montserrat',sans-serif; font-size:.9rem; color:#2E5BBA; }
+        .tl p{ font-size:.8rem; color:#44515f; }
+        .tl .evi{ font-size:.72rem; color:#8a3f0a; background:#FFF1E6; border-radius:20px; padding:4px 10px; white-space:nowrap; }
 
-        .highlight {
-            background: linear-gradient(135deg,#FF8C42,#FFA366); color: #fff; padding: 20px 22px;
-            border-radius: 14px; margin: 18px 0; text-align: center; box-shadow: 0 8px 22px rgba(255,140,66,.3);
+        .references{ background:#F8F9FA; border-radius:12px; padding:18px; border:1.5px solid #E4E9EE; font-size:.82rem; line-height:1.7; }
+        .references p{ margin-bottom:9px; padding-left:24px; text-indent:-24px; }
+        .footer{ text-align:center; padding:20px; color:#cfe0f2; font-style:italic; font-size:.88rem; }
+        .footer strong{ color:#fff; }
+
+        @media (max-width:720px){
+            .header h1{ font-size:1.8rem; }
+            .pasos{ grid-template-columns:1fr 1fr; }
+            .bridge{ grid-template-columns:1fr; }
+            .bridge .barrow{ transform:rotate(90deg); }
+            .arrow{ transform:rotate(90deg); }
         }
-        .highlight h3 { font-family: 'Montserrat', sans-serif; font-size: 1.25rem; margin-bottom: 6px; }
-
-        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        @media (max-width: 720px){ .two-col, .kolb { grid-template-columns: 1fr; } .header h1 { font-size: 1.9rem; } }
-
-        .references {
-            background: #F8F9FA; border-radius: 12px; padding: 20px; border: 1.5px solid #E4E9EE;
-            font-size: .86rem; line-height: 1.75;
-        }
-        .references p { margin-bottom: 11px; padding-left: 26px; text-indent: -26px; }
-        .footer { text-align: center; padding: 22px; color: #cfe0f2; font-style: italic; font-size: .9rem; }
-        .footer strong { color: #fff; }
     </style>
 </head>
 <body>
@@ -149,146 +116,115 @@
         <header class="header">
             <div class="badge">Edición 2026 · Un caso real de aula</div>
             <h1>🎯 Evaluación Auténtica</h1>
-            <div class="subtitle">Enseñar a decidir como en el mundo real: el caso del Taller de IA (IIT414W)</div>
-            <div class="author-info">
-                <strong>Germán Gómez Vargas</strong><br>
-                Diplomado en Docencia Universitaria UDD · Curso III · 2026
-            </div>
+            <div class="subtitle">Enseñar a decidir como en el mundo real</div>
+            <div class="author-info"><strong>Germán Gómez Vargas</strong> · Diplomado en Docencia Universitaria UDD · 2026</div>
         </header>
 
-        <!-- THE SPINE: real teaching case -->
-        <section class="case-hero">
-            <div class="tag">🏎️ El ejemplo que recorre toda esta infografía</div>
-            <h2>IIT414W — Artificial Intelligence Workshop: decidir qué modelo llevar a pista</h2>
-            <p><strong>Contexto del curso.</strong> IIT414W es un taller de 4º año de Ingeniería Civil en Informática e Innovación Tecnológica (Facultad de Ingeniería UDD), dictado en inglés. Durante todo el trimestre los estudiantes trabajan con <strong>datos reales de la Fórmula 1</strong> —telemetría, tiempos y resultados de carrera obtenidos vía FastF1 y la API Ergast— como dominio de aplicación: ese hilo conductor da realismo a cada laboratorio, certamen y al proyecto Capstone.</p>
-            <p>Sobre ese contexto, los equipos enfrentan un problema mal estructurado y sin respuesta única, idéntico al que vive un <em>data scientist</em> real:</p>
-            <div class="quote">
-                "El equipo de estrategia debe comprometerse con un único modelo para el próximo Gran Premio. Hay dos candidatos —un Random Forest y un Gradient Boosting— con una exactitud casi idéntica. El Team Principal pregunta: ¿cuál llevamos a pista y por qué? La respuesta debe sostenerse en evidencia, no en la exactitud titular, y declarar con honestidad sus límites: una decisión equivocada cuesta puntos en el campeonato."
+        <!-- FICHA DEL CASO -->
+        <section class="ficha">
+            <div class="tag">🏎️ El caso que recorre toda la infografía</div>
+            <div class="ficha-grid">
+                <div class="fitem"><span class="em">📘</span><div><b>Curso</b><span>IIT414W — AI Workshop (4º año, en inglés)</span></div></div>
+                <div class="fitem"><span class="em">🎓</span><div><b>Carrera</b><span>Ing. Civil en Informática e Innovación Tecnológica · FdI UDD</span></div></div>
+                <div class="fitem"><span class="em">🏎️</span><div><b>Datos</b><span>Fórmula 1 todo el trimestre (FastF1 / Ergast)</span></div></div>
+                <div class="fitem"><span class="em">🎯</span><div><b>RA3</b><span>Justificar la elección de modelo con evidencia y trade-offs</span></div></div>
+                <div class="fitem"><span class="em">🧪</span><div><b>Metodología</b><span>Aprendizaje Basado en Problemas (ABP)</span></div></div>
+                <div class="fitem"><span class="em">📄</span><div><b>Producto</b><span>Recomendación de despliegue + Capstone / Demo Day</span></div></div>
             </div>
-            <div class="case-meta">
-                <div><strong>Resultado de aprendizaje</strong>RA3: comparar modelos y justificar la decisión con evidencia, reconociendo límites y trade-offs.</div>
-                <div><strong>Metodología</strong>Aprendizaje Basado en Problemas (ABP), con datos reales de F1 (FastF1 / Ergast).</div>
-                <div><strong>Producto</strong>Recomendación defendible de despliegue + Capstone con Demo Day ante panel.</div>
-            </div>
+            <div class="quote">"Dos modelos —Random Forest y Gradient Boosting— con exactitud casi idéntica. El Team Principal pregunta: <strong>¿cuál llevamos a pista y por qué?</strong> La respuesta debe sostenerse en evidencia, no en la exactitud titular."</div>
         </section>
 
         <!-- 1. CARACTERÍSTICAS -->
         <section class="section">
-            <h2 class="section-title"><span class="num">1</span> Características de la Evaluación Auténtica</h2>
-            <p class="lead">La EA evalúa desempeños situados en contextos profesionales reales, activando juicio y no solo recuerdo. Cada característica se hace visible en el caso del Taller de IA:</p>
-            <div class="grid">
-                <div class="card">
-                    <h3>🌍 Realismo / contexto auténtico</h3>
-                    <p>La tarea reproduce una situación profesional genuina.</p>
-                    <div class="applied"><b>En IIT414W:</b> decidir el modelo a desplegar ante un "Team Principal", como en una consultoría de datos.</div>
-                </div>
-                <div class="card">
-                    <h3>🧠 Cognición de orden superior</h3>
-                    <p>Exige analizar, evaluar y decidir, no reproducir contenidos.</p>
-                    <div class="applied"><b>En IIT414W:</b> el foco es <em>analizar</em> y <em>evaluar</em> evidencia (Bloom revisado), no memorizar métricas.</div>
-                </div>
-                <div class="card">
-                    <h3>⚖️ Juicio y defensa de decisiones</h3>
-                    <p>El estudiante toma postura y la argumenta.</p>
-                    <div class="applied"><b>En IIT414W:</b> redactan una recomendación con 3 evidencias, 2 límites y el trade-off asumido.</div>
-                </div>
-                <div class="card">
-                    <h3>🔬 Evaluación de proceso y producto</h3>
-                    <p>Importa cómo se llega, no solo el resultado final.</p>
-                    <div class="applied"><b>En IIT414W:</b> DECISION_LOG y PROMPTS.md hacen visible y evaluable el pensamiento.</div>
-                </div>
-                <div class="card">
-                    <h3>💬 Retroalimentación para mejorar</h3>
-                    <p>Feedback orientado al progreso a lo largo del proceso.</p>
-                    <div class="applied"><b>En IIT414W:</b> checkpoints formativos sin nota y feedback de certámenes antes de la decisión final.</div>
-                </div>
-                <div class="card">
-                    <h3>🚀 Transferencia al mundo del trabajo</h3>
-                    <p>Lo aprendido se aplica con fluidez a contextos reales.</p>
-                    <div class="applied"><b>En IIT414W:</b> elegir y justificar un modelo para producción es una tarea cotidiana del oficio.</div>
-                </div>
+            <h2 class="stitle"><span class="num">1</span> Características de la EA</h2>
+            <div class="tiles">
+                <div class="tile"><span class="em">🌍</span><h3>Realismo</h3><span class="mini">Decidir un modelo a desplegar</span></div>
+                <div class="tile"><span class="em">🧠</span><h3>Orden superior</h3><span class="mini">Juzgar, no memorizar</span></div>
+                <div class="tile"><span class="em">⚖️</span><h3>Juicio y defensa</h3><span class="mini">3 evidencias · 2 límites</span></div>
+                <div class="tile"><span class="em">🔬</span><h3>Proceso y producto</h3><span class="mini">DECISION_LOG + PROMPTS</span></div>
+                <div class="tile"><span class="em">💬</span><h3>Retroalimentación</h3><span class="mini">Checkpoints sin nota</span></div>
+                <div class="tile"><span class="em">🚀</span><h3>Transferencia</h3><span class="mini">Tarea real del oficio</span></div>
             </div>
         </section>
 
         <!-- 2. MODELO VILLARROEL & BRUNA -->
         <section class="section">
-            <h2 class="section-title"><span class="num">2</span> Pasos del modelo de Villarroel &amp; Bruna (2017)</h2>
-            <p class="lead">El modelo chileno de EA propone construir la evaluación desde el perfil de egreso hacia un desempeño realista y desafiante. Mapeo cada paso a la actividad ABP del Taller de IA:</p>
-            <div class="steps">
-                <div class="step"><div class="n">1</div><div><h4>Conocer el perfil de egreso</h4><p>Identificar competencias específicas y genéricas de la carrera.</p><span class="ex">→ Competencia del ingeniero en datos: decidir bajo incertidumbre con evidencia.</span></div></div>
-                <div class="step"><div class="n">2</div><div><h4>Responder a necesidades del mundo laboral</h4><p>Incorporar problemas típicos de la profesión.</p><span class="ex">→ Seleccionar un modelo para producción, problema real de cualquier equipo de ML.</span></div></div>
-                <div class="step"><div class="n">3</div><div><h4>Inyectar realismo</h4><p>Evaluar desempeños relevantes y frecuentes en la vida laboral.</p><span class="ex">→ Datos reales de Fórmula 1 (FastF1 / Ergast), no un dataset de juguete.</span></div></div>
-                <div class="step"><div class="n">4</div><div><h4>Decidir el formato</h4><p>Tareas que simulan condiciones profesionales.</p><span class="ex">→ Recomendación de una página + notebook reproducible, como un informe técnico.</span></div></div>
-                <div class="step"><div class="n">5</div><div><h4>Construir un desafío cognitivo</h4><p>De manejar información a juzgar, decidir y proponer.</p><span class="ex">→ Error analysis, ablation y lectura SHAP para sostener la decisión.</span></div></div>
-                <div class="step"><div class="n">6</div><div><h4>Incorporar a terceros</h4><p>Otros evaluadores en roles de clientes, empleadores o colegas.</p><span class="ex">→ Coevaluación entre pares y panel en el Demo Day del Capstone.</span></div></div>
-                <div class="step"><div class="n">7</div><div><h4>Incluir diversas evidencias</h4><p>Varias fuentes de evidencia del aprendizaje.</p><span class="ex">→ Labs, certámenes, control aplicado, Capstone y examen-caso integrador.</span></div></div>
-                <div class="step"><div class="n">8</div><div><h4>Explicitar el desempeño esperado</h4><p>Rúbricas y ejemplos de excelencia que guían el trabajo.</p><span class="ex">→ Rúbrica de la recomendación (evidencia, límites, trade-offs) + baseline del profesor.</span></div></div>
-                <div class="step"><div class="n">9</div><div><h4>Entregar feedback efectivo</h4><p>Saber aciertos, errores y cómo mejorar.</p><span class="ex">→ Cierre metacognitivo "antes pensaba… ahora pienso…" y feedback por hito.</span></div></div>
+            <h2 class="stitle"><span class="num">2</span> Modelo de Villarroel &amp; Bruna · 9 pasos aplicados</h2>
+            <div class="pasos">
+                <div class="paso"><div class="n">1</div><h4>Perfil de egreso</h4><div class="ex">Decidir con evidencia bajo incertidumbre</div></div>
+                <div class="paso"><div class="n">2</div><h4>Necesidad laboral</h4><div class="ex">Elegir un modelo para producción</div></div>
+                <div class="paso"><div class="n">3</div><h4>Realismo</h4><div class="ex">Datos reales de F1 (FastF1 / Ergast)</div></div>
+                <div class="paso"><div class="n">4</div><h4>Formato</h4><div class="ex">Recomendación + notebook reproducible</div></div>
+                <div class="paso"><div class="n">5</div><h4>Desafío cognitivo</h4><div class="ex">Error analysis · ablation · SHAP</div></div>
+                <div class="paso"><div class="n">6</div><h4>Terceros</h4><div class="ex">Coevaluación y panel del Demo Day</div></div>
+                <div class="paso"><div class="n">7</div><h4>Diversas evidencias</h4><div class="ex">Labs · certámenes · Capstone · examen</div></div>
+                <div class="paso"><div class="n">8</div><h4>Desempeño explícito</h4><div class="ex">Rúbrica + baseline del profesor</div></div>
+                <div class="paso"><div class="n">9</div><h4>Feedback efectivo</h4><div class="ex">"Antes pensaba… ahora pienso…"</div></div>
             </div>
         </section>
 
-        <!-- 3. MUNDO LABORAL + APRENDIZAJE EXPERIENCIAL -->
+        <!-- 3. MUNDO LABORAL -->
         <section class="section">
-            <h2 class="section-title"><span class="num">3</span> Vínculo con el mundo laboral y el aprendizaje experiencial</h2>
-            <div class="two-col">
-                <div class="card">
-                    <h3>💼 EA ↔ Mundo del trabajo</h3>
-                    <p>La actividad no <em>simula</em> el trabajo: lo reproduce. El estudiante hace lo mismo que un profesional de datos —elegir un modelo, defenderlo ante un stakeholder y declarar sus límites— y lo presenta en el Demo Day como ante un cliente. Eso desarrolla autoeficacia profesional y facilita la inserción laboral.</p>
-                </div>
-                <div class="card">
-                    <h3>🔄 EA ↔ Aprendizaje experiencial</h3>
-                    <p>La EA aporta el <strong>contexto auténtico</strong> y el aprendizaje experiencial (Kolb) aporta el <strong>proceso reflexivo</strong> que convierte la experiencia en aprendizaje. Juntos producen aprendizaje profundo y competencias transferibles.</p>
-                </div>
-            </div>
-            <div class="highlight"><h3>El ciclo de Kolb dentro de la actividad</h3><p>Una vuelta completa en una sola sesión de taller</p></div>
-            <div class="kolb">
-                <div class="phase"><h4>🌟 Experiencia concreta</h4><p>Ejecutar el notebook y correr ambos modelos sobre datos reales de F1.</p></div>
-                <div class="phase"><h4>👁️ Observación reflexiva</h4><p>Auditar críticamente la síntesis de la IA y leer el error analysis con feedback.</p></div>
-                <div class="phase"><h4>💭 Conceptualización abstracta</h4><p>Articular criterios de decisión y trade-offs (sesgo–varianza, calibración).</p></div>
-                <div class="phase"><h4>⚡ Experimentación activa</h4><p>Tomar la decisión y transferirla al Capstone con el dataset congelado.</p></div>
+            <h2 class="stitle"><span class="num">3</span> Del aula al mundo del trabajo</h2>
+            <div class="bridge">
+                <div class="bnode"><span class="em">🎓</span><h4>En el aula</h4><p>Equipos resuelven el problema de F1 con datos reales</p></div>
+                <div class="barrow">➜</div>
+                <div class="bnode"><span class="em">💼</span><h4>En el oficio</h4><p>Un data scientist elige y defiende un modelo ante un stakeholder</p></div>
             </div>
         </section>
 
-        <!-- 4. INSTRUMENTOS -->
+        <!-- 4. APRENDIZAJE EXPERIENCIAL (KOLB) -->
         <section class="section">
-            <h2 class="section-title"><span class="num">4</span> Instrumentos de evaluación utilizados</h2>
-            <p class="lead">La EA combina instrumentos que capturan proceso y producto. Estos son los que uso realmente en el Taller de IA:</p>
-            <div class="grid">
-                <div class="card"><h3>📊 Rúbrica analítica</h3><p>Criterios explícitos de la recomendación: evidencia, límites y trade-offs.</p></div>
-                <div class="card"><h3>📝 DECISION_LOG.md</h3><p>Bitácora de la decisión: qué decidir, qué evidencia la justifica y qué falta aprender.</p></div>
-                <div class="card"><h3>🤖 PROMPTS.md + AI Usage Appendix</h3><p>Trazabilidad del uso de IA: prompts, verificación y límites (vinculado al RA4).</p></div>
-                <div class="card"><h3>📁 Portafolio de notebooks</h3><p>Labs reproducibles que evidencian la evolución del desempeño.</p></div>
-                <div class="card"><h3>👥 Coevaluación entre pares</h3><p>Juicio de terceros en el Capstone y retroalimentación de equipo.</p></div>
-                <div class="card"><h3>🎤 Demo Day + examen-caso</h3><p>Presentación ante panel y caso integrador final (4 h) que exige decidir con evidencia.</p></div>
+            <h2 class="stitle"><span class="num">4</span> Aprendizaje experiencial · Ciclo de Kolb</h2>
+            <div class="flow">
+                <div class="phase"><span class="em">🌟</span><h4>Experiencia concreta</h4><p>Correr ambos modelos sobre datos de F1</p></div>
+                <div class="arrow">➜</div>
+                <div class="phase"><span class="em">👁️</span><h4>Observación reflexiva</h4><p>Auditar la IA y leer el error analysis</p></div>
+                <div class="arrow">➜</div>
+                <div class="phase"><span class="em">💭</span><h4>Conceptualización</h4><p>Criterios y trade-offs (sesgo–varianza)</p></div>
+                <div class="arrow">➜</div>
+                <div class="phase"><span class="em">⚡</span><h4>Experimentación activa</h4><p>Decidir y transferir al Capstone</p></div>
+            </div>
+            <div class="loop">↻ y el ciclo vuelve a empezar con un nuevo problema</div>
+        </section>
+
+        <!-- 5. INSTRUMENTOS -->
+        <section class="section">
+            <h2 class="stitle"><span class="num">5</span> Instrumentos de evaluación</h2>
+            <div class="chips">
+                <div class="chip"><span class="em">📊</span><div><b>Rúbrica analítica</b><span>Evidencia · límites · trade-offs</span></div></div>
+                <div class="chip"><span class="em">📝</span><div><b>DECISION_LOG.md</b><span>Bitácora de la decisión</span></div></div>
+                <div class="chip"><span class="em">🤖</span><div><b>PROMPTS.md + AI Appendix</b><span>Uso y verificación de IA (RA4)</span></div></div>
+                <div class="chip"><span class="em">📁</span><div><b>Portafolio de notebooks</b><span>Labs reproducibles</span></div></div>
+                <div class="chip"><span class="em">👥</span><div><b>Coevaluación</b><span>Juicio de pares en el Capstone</span></div></div>
+                <div class="chip"><span class="em">🎤</span><div><b>Demo Day + examen-caso</b><span>Panel y caso integrador final</span></div></div>
             </div>
         </section>
 
-        <!-- 5. EL EJEMPLO EN DETALLE -->
+        <!-- 6. LA ACTIVIDAD PASO A PASO -->
         <section class="section">
-            <h2 class="section-title"><span class="num">5</span> El ejemplo en detalle: la secuencia de la actividad</h2>
-            <p class="lead">Una sesión de taller (150 min) descompuesta en pasos. Cada paso intenciona un proceso cognitivo del RA3 y deja una evidencia evaluable.</p>
-            <div class="steps">
-                <div class="step"><div class="n">a</div><div><h4>Comprensión del problema y necesidades (~15 min)</h4><p>Se abre el problema sin entregar la solución; los equipos delimitan la decisión y qué evidencia creen necesaria.</p><span class="ex">Evidencia → DECISION_LOG.md</span></div></div>
-                <div class="step"><div class="n">b</div><div><h4>Síntesis de fuentes con NotebookLM (~20 min)</h4><p>Interrogan un corpus curado para construir una base de criterios de decisión.</p><span class="ex">Evidencia → PROMPTS.md (prompt + respuesta)</span></div></div>
-                <div class="step"><div class="n">c</div><div><h4>Auditoría crítica de la salida de la IA (~20 min)</h4><p>Contrastan cada afirmación contra la fuente: marcan lo correcto, lo incompleto y lo no sustentado (posible alucinación).</p><span class="ex">Proceso → Evaluar / Verificar (Bloom revisado)</span></div></div>
-                <div class="step"><div class="n">d</div><div><h4>Producción de evidencia propia (~30 min + autónomo)</h4><p>Sobre el notebook plantilla: métricas más allá de la exactitud, error analysis por contexto (seco/lluvia), ablation mínima y lectura SHAP.</p><span class="ex">Proceso → Analizar / Diferenciar, Organizar, Atribuir</span></div></div>
-                <div class="step"><div class="n">e</div><div><h4>Decisión justificada y trade-offs (~20 min)</h4><p>Recomendación de una página: modelo elegido, 3 evidencias, 2 limitaciones y el trade-off principal.</p><span class="ex">Proceso → Evaluar / Criticar (núcleo del RA3)</span></div></div>
-                <div class="step"><div class="n">f</div><div><h4>Cierre metacognitivo (~10 min)</h4><p>Rutina "antes pensaba… ahora pienso…": qué cuenta como evidencia y cuándo confiar o verificar una síntesis de IA.</p><span class="ex">Conocimiento → Metacognitivo (condicional y autoconocimiento)</span></div></div>
+            <h2 class="stitle"><span class="num">6</span> La actividad paso a paso · 150 min</h2>
+            <div class="timeline">
+                <div class="tl"><span class="l">a</span><div><h4>Comprender el problema</h4><p>Delimitan la decisión y qué evidencia necesitan</p></div><span class="evi">DECISION_LOG</span></div>
+                <div class="tl"><span class="l">b</span><div><h4>Síntesis con NotebookLM</h4><p>Construyen una base de criterios desde un corpus curado</p></div><span class="evi">PROMPTS.md</span></div>
+                <div class="tl"><span class="l">c</span><div><h4>Auditoría crítica de la IA</h4><p>Verifican cada afirmación contra la fuente</p></div><span class="evi">Evaluar</span></div>
+                <div class="tl"><span class="l">d</span><div><h4>Evidencia propia</h4><p>Métricas, error analysis, ablation y SHAP</p></div><span class="evi">Analizar</span></div>
+                <div class="tl"><span class="l">e</span><div><h4>Decisión y trade-offs</h4><p>Recomendación: modelo, 3 evidencias, 2 límites</p></div><span class="evi">Criticar</span></div>
+                <div class="tl"><span class="l">f</span><div><h4>Cierre metacognitivo</h4><p>"Antes pensaba… ahora pienso…"</p></div><span class="evi">Metacognición</span></div>
             </div>
-            <div class="highlight" style="margin-top:20px;"><h3>Pregunta que cierra la sesión</h3><p>"¿Una tabla comparativa ordenada y convincente garantiza que la decisión sea correcta? ¿Por qué?"</p></div>
         </section>
 
         <!-- REFERENCIAS -->
         <section class="section">
-            <h2 class="section-title"><span class="num">📚</span> Referencias bibliográficas</h2>
+            <h2 class="stitle"><span class="num">📚</span> Referencias (APA)</h2>
             <div class="references">
-                <p>Anderson, L. W., y Krathwohl, D. R. (2001). <em>A taxonomy for learning, teaching, and assessing: A revision of Bloom's taxonomy of educational objectives</em>. Longman.</p>
+                <p>Anderson, L. W., y Krathwohl, D. R. (2001). <em>A taxonomy for learning, teaching, and assessing</em>. Longman.</p>
                 <p>Barrows, H. S. (1986). A taxonomy of problem-based learning methods. <em>Medical Education, 20</em>(6), 481-486.</p>
                 <p>Kolb, D. A. (1984). <em>Experiential learning: Experience as the source of learning and development</em>. Prentice Hall.</p>
-                <p>Molnar, C. (2022). <em>Interpretable machine learning: A guide for making black box models explainable</em> (2.ª ed.). https://christophm.github.io/interpretable-ml-book/</p>
-                <p>Moreno Olivos, T. (2016). <em>Evaluación del aprendizaje y para el aprendizaje: Reinventar la evaluación en el aula</em>. Universidad Autónoma Metropolitana.</p>
-                <p>Ritchhart, R., Church, M., y Morrison, K. (2011). <em>Making thinking visible: How to promote engagement, understanding, and independence for all learners</em>. Jossey-Bass.</p>
-                <p>Villarroel, V., y Bruna, D. (2017). Vinculando la Universidad con el mundo del trabajo a través de la Evaluación Auténtica: Propuesta de un modelo. <em>Calidad en la Educación, 47</em>, 95-134.</p>
+                <p>Molnar, C. (2022). <em>Interpretable machine learning</em> (2.ª ed.). https://christophm.github.io/interpretable-ml-book/</p>
+                <p>Moreno Olivos, T. (2016). <em>Evaluación del aprendizaje y para el aprendizaje</em>. Universidad Autónoma Metropolitana.</p>
+                <p>Ritchhart, R., Church, M., y Morrison, K. (2011). <em>Making thinking visible</em>. Jossey-Bass.</p>
+                <p>Villarroel, V., y Bruna, D. (2017). Vinculando la Universidad con el mundo del trabajo a través de la Evaluación Auténtica. <em>Calidad en la Educación, 47</em>, 95-134.</p>
             </div>
         </section>
 
